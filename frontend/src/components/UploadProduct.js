@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import {RiCloseLine} from "react-icons/ri";
 import productCategory from "../helpers/productCategory";
 import {FaCloudUploadAlt} from "react-icons/fa";
+import uploadImage from "../helpers/uploadImage";
+import DisplayImage from "./DisplayImage";
 
 const UploadProduct = ({
                            onClose
@@ -15,17 +17,24 @@ const UploadProduct = ({
         price: "",
         selling: ""
     })
-
-    const [uploadProductImageInput, setUploadProductImageInput] = useState("")
+    const [openFullScreenImage, setOpenFullScreenImage] =useState(false)
+    const [fullScreenImage, setFullScreenImage] = useState("")
 
     const handleOnChange = (e) => {
 
     }
 
-    const handleUploadProduct = (e) => {
+    const handleUploadProduct = async (e) => {
         const file = e.target.files[0]
-        setUploadProductImageInput(file.name)
-        console.log('file', file)
+        const uploadImageCloudinary = await uploadImage(file)
+
+        setData((preve) => {
+            return {
+                ...preve,
+                productImage: [ ...preve.productImage, uploadImageCloudinary.url]
+            }
+        })
+
     }
 
     return (
@@ -85,12 +94,45 @@ const UploadProduct = ({
                         </div>
                     </label>
                     <div>
-                        <img src='' width={80} height={80} className='bg-slate-100'/>
+                        {
+                            data?.productImage[0] ? (
+                                <div className='flex items-center gap-2'>
+                                    {
+                                        data.productImage.map(el => {
+                                            return (
+                                                <img
+                                                    src={el}
+                                                    alt={el}
+                                                    width={80}
+                                                    height={80}
+                                                    className='bg-slate-100 border cursor-pointer'
+                                                    onClick={() => {
+                                                        setOpenFullScreenImage(true)
+                                                        setFullScreenImage(el)
+                                                        console.log(el)
+                                                    }}/>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            ) : (
+                                <p className='text-red-600 text-xs'>*Please upload image product.</p>
+                            )
+                        }
                     </div>
+
+                    <button className='px-2 py-3 bg-slate-300 text-white mb-2'>Upload Product</button>
                 </form>
 
-
             </div>
+
+            {/***Display image full screen */}
+            {
+                openFullScreenImage && (
+                    <DisplayImage onClose={() => setOpenFullScreenImage(false)} imgUrl={fullScreenImage} />
+                )
+            }
+            
         </div>
     )
 }
