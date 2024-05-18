@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {RiCloseLine} from "react-icons/ri";
 import productCategory from "../helpers/productCategory";
+import {FaCloudUploadAlt} from "react-icons/fa";
 
 const UploadProduct = ({
                            onClose
@@ -9,14 +10,22 @@ const UploadProduct = ({
         productName: "",
         brandName: "",
         category: "",
-        productImage: "",
+        productImage: [],
         description: "",
         price: "",
         selling: ""
     })
 
+    const [uploadProductImageInput, setUploadProductImageInput] = useState("")
+
     const handleOnChange = (e) => {
 
+    }
+
+    const handleUploadProduct = (e) => {
+        const file = e.target.files[0]
+        setUploadProductImageInput(file.name)
+        console.log('file', file)
     }
 
     return (
@@ -31,7 +40,7 @@ const UploadProduct = ({
                     </div>
                 </div>
 
-                <form className='grid p-2 gap-2 overflow-y-scroll h-full'>
+                <form className='grid p-2 gap-2 overflow-y-scroll h-full pb-5'>
                     <label htmlFor='productName' className='mt-1'>Product Name: </label>
                     <input
                         type='text'
@@ -66,12 +75,17 @@ const UploadProduct = ({
                     </select>
 
                     <label htmlFor='productImage' className='mt-1'>Product Image: </label>
-                    <div className='p-2 bg-slate-100 border rounded h-32 w-full'>
-                        aaa
-                    </div>
-
+                    <label htmlFor='uploadImageInput'>
+                        <div className='p-2 bg-slate-100 border rounded h-32 w-full flex justify-center items-center cursor-pointer'>
+                            <div className='text-slate-500 flex justify-center items-center flex-col gap-1'>
+                                <span className='text-4xl'><FaCloudUploadAlt/></span>
+                                <p className='text-sm'>Update Image Product</p>
+                                <input type='file' id='uploadImageInput' className='hidden' onChange={handleUploadProduct}/>
+                            </div>
+                        </div>
+                    </label>
                     <div>
-                        {/*<img src='' width={100} height={100} className='bg-slate-100'/>*/}
+                        <img src='' width={80} height={80} className='bg-slate-100'/>
                     </div>
                 </form>
 
