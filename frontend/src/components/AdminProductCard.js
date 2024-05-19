@@ -11,9 +11,9 @@ const AdminProductCard = ({
 
 
     return (
-        <div className='bg-white p-4 rounded '>
+        <div className='bg-white p-4 rounded'>
             <div className=''>
-                <img src={data?.productImage[0]} alt='' width={150} height={150}/>
+                <img src={data?.productImage[0]} alt='' width={150} height={150} className='mx-auto'/>
                 <p>Thương hiệu: <span className='font-semibold text-sm'>{data.brandName}</span></p>
                 <h2 className='font-semibold'>{data.productName}</h2>
 
