@@ -13,8 +13,8 @@ const AdminProductCard = ({
     return (
         <div className='bg-white p-4 rounded'>
             <div className=''>
-                <img src={data?.productImage[0]} alt='' width={150} height={150} className='mx-auto'/>
-                <p>Thương hiệu: <span className='font-semibold text-sm'>{data.brandName}</span></p>
+                <img src={data?.productImage[0]} alt='' width={120} height={120} className='mx-auto pb-2'/>
+                <p>Thương hiệu: <span className='font-semibold text-sm text-blue-700'>{data.brandName}</span></p>
                 <h2 className='font-semibold'>{data.productName}</h2>
 
                 <div className='flex'>
@@ -24,7 +24,7 @@ const AdminProductCard = ({
                         }
                     </p>
                     <div
-                        className='w-fit ml-auto p-2 text-2xl bg-slate-100 hover:bg-slate-300 rounded-full hover:text-white cursor-pointer'
+                        className='w-fit ml-auto p-2 text-2xl bg-green-100 hover:bg-green-300 rounded-full hover:text-white cursor-pointer'
                         onClick={() => setEditProduct(true)}>
                         <MdEditNote/>
                     </div>

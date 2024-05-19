@@ -225,7 +225,7 @@ const AdminEditProduct = (
                     </textarea>
 
 
-                    <button className='px-2 py-3 bg-slate-300 text-white mb-2'>Update Product</button>
+                    <button className='px-2 py-3 bg-green-600 text-white mb-2'>Update Product</button>
                 </form>
 
             </div>
