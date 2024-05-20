@@ -20,7 +20,7 @@ const AdminProductCard = ({
                 <div className='flex'>
                     <p className='font-semibold text-red-500 p-2'>
                         {
-                            displayVNDCurrency(data.sellingPrice)
+                            displayVNDCurrency(data.price)
                         }
                     </p>
                     <div

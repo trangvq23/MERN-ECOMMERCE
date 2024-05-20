@@ -1,46 +1,61 @@
-
 const backendDomain = "http://localhost:8080"
 
 const SummaryApi = {
-    signUp : {
-        url : `${backendDomain}/api/signup`,
-        method : "post"
+    signUp: {
+        url: `${backendDomain}/api/signup`,
+        method: "post"
     },
-    signIn : {
-        url : `${backendDomain}/api/signin`,
-        method : "post"
+    signIn: {
+        url: `${backendDomain}/api/signin`,
+        method: "post"
     },
-    current_user : {
-        url : `${backendDomain}/api/user-details`,
-        method : "get"
+    current_user: {
+        url: `${backendDomain}/api/user-details`,
+        method: "get"
     },
-    logout_user : {
-        url : `${backendDomain}/api/userLogout`,
-        method : "get"
+    logout_user: {
+        url: `${backendDomain}/api/userLogout`,
+        method: "get"
     },
-    allUser : {
-        url : `${backendDomain}/api/all-user`,
-        method : "get"
+    allUser: {
+        url: `${backendDomain}/api/all-user`,
+        method: "get"
     },
-    updateUser : {
-        url : `${backendDomain}/api/update-user`,
-        method : "post"
+    updateUser: {
+        url: `${backendDomain}/api/update-user`,
+        method: "post"
     },
-    uploadProduct : {
-        url : `${backendDomain}/api/upload-product`,
-        method : "post"
+    uploadProduct: {
+        url: `${backendDomain}/api/upload-product`,
+        method: "post"
     },
-    allProduct : {
-        url : `${backendDomain}/api/get-product`,
-        method : "get"
+    allProduct: {
+        url: `${backendDomain}/api/get-product`,
+        method: "get"
     },
-    updateProduct : {
-        url : `${backendDomain}/api/update-product`,
-        method : "post"
+    updateProduct: {
+        url: `${backendDomain}/api/update-product`,
+        method: "post"
     },
-    categoryProduct : {
-        url : `${backendDomain}/api/get-category`,
-        method : "get"
+    categoryProduct: {
+        url: `${backendDomain}/api/get-category`,
+        method: "get"
+    },
+    categoryWiseProduct: {
+        url: `${backendDomain}/api/category-product`,
+        method: "post"
+    },
+    productDetails: {
+        url: `${backendDomain}/api/product-details`,
+        method: "post"
+    },
+    addToCartProduct: {
+        url: `${backendDomain}/api/addtocart`,
+        method: "post"
+    },
+    addToCartProductCount: {
+        url: `${backendDomain}/api/countAddToCartProduct`,
+        method: "get"
     }
 }
 
