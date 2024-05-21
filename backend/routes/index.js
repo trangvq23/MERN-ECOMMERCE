@@ -21,6 +21,8 @@ const addToCartViewProduct = require("../controller/user/addToCartViewProduct");
 const updateAddToCartProduct = require("../controller/user/updateAddToCartProduct");
 const deleteAddToCartProduct = require("../controller/user/deleteAddToCartProduct");
 const searchProduct = require("../controller/product/searchProduct");
+const { createOrder, getAllOrders, updateOrderStatus, deleteOrder } = require('../controller/order/Order');
+const { getMonthlyRevenue } = require('../controller/Statistical/StatisticalController');
 
 router.post("/signup", userSignUpController)
 router.post("/signin", userSignInController)
@@ -47,5 +49,16 @@ router.get("/view-cart-product", authToken, addToCartViewProduct)
 router.post("/update-cart-product", authToken, updateAddToCartProduct)
 router.post("/delete-cart-product", authToken, deleteAddToCartProduct)
 
+
+//Order
+router.post('/create-order', authToken, createOrder);
+router.get('/orders', authToken, getAllOrders);
+router.put('/order-status', authToken, updateOrderStatus);
+router.delete('/order', authToken, deleteOrder);
+
+
+//Statistical
+// Thống kê doanh thu
+router.get('/stats/revenue', authToken, getMonthlyRevenue);
 
 module.exports = router

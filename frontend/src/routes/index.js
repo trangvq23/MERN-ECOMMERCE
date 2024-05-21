@@ -11,6 +11,8 @@ import CategoryProduct from "../pages/CategoryProduct";
 import ProductDetails from "../pages/ProductDetails";
 import Cart from "../pages/Cart";
 import SearchProduct from "../pages/SearchProduct";
+import Dashboard from "../pages/Dashboard";
+import AllOrders from "../pages/AllOrder";
 
 const router = createBrowserRouter([
     {
@@ -62,13 +64,21 @@ const router = createBrowserRouter([
                 element: <AdminPanel/>,
                 children: [
                     {
+                        path: "dashboard",
+                        element: <Dashboard />
+                    },
+                    {
                         path: "all-users",
                         element: <AllUsers/>
                     },
                     {
                         path: "all-products",
                         element: <AllProducts/>
-                    }
+                    },
+                    {
+                        path: "all-orders",
+                        element: <AllOrders />
+                    },
                 ]
             },
 

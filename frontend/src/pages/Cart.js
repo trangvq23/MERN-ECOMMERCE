@@ -3,33 +3,39 @@ import SummaryApi from '../common'
 import Context from '../context'
 import {MdDelete} from "react-icons/md";
 import displayVNDCurrency from "../helpers/displayCurrency";
+import PaymentPage from "./PaymentPage";
+import {toast} from "react-toastify";
 
 const Cart = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
+    const [showPaymentForm, setShowPaymentForm] = useState(false);
     const context = useContext(Context)
     const loadingCart = new Array(4).fill(null)
 
 
     const fetchData = async () => {
 
-        const response = await fetch(SummaryApi.addToCartProductView.url, {
-            method: SummaryApi.addToCartProductView.method,
-            credentials: 'include',
-            headers: {
-                "content-type": 'application/json'
-            },
-        })
+        try {
+            const response = await fetch(SummaryApi.addToCartProductView.url, {
+                method: SummaryApi.addToCartProductView.method,
+                credentials: 'include',
+                headers: {
+                    "content-type": 'application/json'
+                },
+            });
 
+            const responseData = await response.json();
+            console.log('Response data:', responseData);
 
-        const responseData = await response.json()
-
-        if (responseData.success) {
-            setData(responseData.data)
+            if (responseData.success) {
+                setData(responseData.data);
+            }
+        } catch (error) {
+            console.error('Error fetching cart data:', error);
         }
 
-
-    }
+    };
 
     const handleLoading = async () => {
         await fetchData()
@@ -40,7 +46,6 @@ const Cart = () => {
         handleLoading()
         setLoading(false)
     }, [])
-
 
     const increaseQty = async (id, qty) => {
         const response = await fetch(SummaryApi.updateCartProduct.url, {
@@ -59,14 +64,12 @@ const Cart = () => {
 
         const responseData = await response.json()
 
-
         if (responseData.success) {
             fetchData()
         }
-    }
+    };
 
-
-    const decraseQty = async (id, qty) => {
+    const decreaseQty = async (id, qty) => {
         if (qty >= 2) {
             const response = await fetch(SummaryApi.updateCartProduct.url, {
                 method: SummaryApi.updateCartProduct.method,
@@ -84,12 +87,11 @@ const Cart = () => {
 
             const responseData = await response.json()
 
-
             if (responseData.success) {
                 fetchData()
             }
         }
-    }
+    };
 
     const deleteCartProduct = async (id) => {
         const response = await fetch(SummaryApi.deleteCartProduct.url, {
@@ -111,13 +113,20 @@ const Cart = () => {
             fetchData()
             context.fetchUserAddToCart()
         }
-    }
+    };
+
+    const handlePayment = () => {
+        if (data.length === 0) {
+            toast.error("Your cart is empty. Please add items to your cart before proceeding to payment.");
+            return;
+        }
+        setShowPaymentForm(true);
+    };
 
     const totalQty = data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0)
     const totalPrice = data.reduce((preve, curr) => preve + (curr.quantity * curr?.productId?.sellingPrice), 0)
     return (
         <div className='pl-6 pr-6 mx-auto'>
-
             <div className='text-center text-lg my-3'>
                 {
                     data.length === 0 && !loading && (
@@ -146,7 +155,8 @@ const Cart = () => {
                                          className='w-full bg-white h-32 my-2 border border-slate-300  rounded grid grid-cols-[128px,1fr]'>
                                         <div className='w-32 h-32 bg-slate-200'>
                                             <img src={product?.productId?.productImage[0]}
-                                                 className='p-3 w-full h-full object-scale-down mix-blend-multiply' alt=''/>
+                                                 className='p-3 w-full h-full object-scale-down mix-blend-multiply'
+                                                 alt=''/>
                                         </div>
                                         <div className='px-4 py-2 relative'>
                                             {/** Delete product */}
@@ -165,7 +175,7 @@ const Cart = () => {
                                             <div className='flex items-center gap-3 mt-1'>
                                                 <button
                                                     className='border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded '
-                                                    onClick={() => decraseQty(product?._id, product?.quantity)}>-
+                                                    onClick={() => decreaseQty(product?._id, product?.quantity)}>-
                                                 </button>
                                                 <span>{product?.quantity}</span>
                                                 <button
@@ -204,13 +214,14 @@ const Cart = () => {
                                     <p>{displayVNDCurrency(totalPrice)}</p>
                                 </div>
 
-                                <button className='bg-blue-600 p-2 text-white w-full mt-2'>Payment</button>
+                                <button onClick={handlePayment} className='bg-blue-600 p-2 text-white w-full mt-2'>Payment</button>
 
                             </div>
                         )
                     }
                 </div>
             </div>
+            {showPaymentForm && <PaymentPage totalAmount={totalPrice} />}
         </div>
     )
 }

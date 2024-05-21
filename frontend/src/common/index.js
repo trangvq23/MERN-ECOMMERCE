@@ -72,7 +72,27 @@ const SummaryApi = {
     searchProduct: {
         url: `${backendDomain}/api/search`,
         method: "get"
-    }
+    },
+    createOrder: {
+        url: `${backendDomain}/api/create-order`,
+        method: 'post'
+    },
+    allOrders: {
+        url: `${backendDomain}/api/orders`,
+        method: 'get'
+    },
+    updateOrderStatus: {
+        url: `${backendDomain}/api/order-status`,
+        method: 'put'
+    },
+    deleteOrder: {
+        url: `${backendDomain}/api/order`,
+        method: 'delete'
+    },
+    getMonthlyRevenue: {
+        url: `${backendDomain}/api/stats/revenue`,
+        method: 'GET'
+    },
 }
 
 export default SummaryApi;
