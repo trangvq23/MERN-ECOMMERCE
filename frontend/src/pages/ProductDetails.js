@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import {useParams} from "react-router-dom";
+import React, {useContext, useEffect, useState} from 'react'
+import {useNavigate, useParams} from "react-router-dom";
 import SummaryApi from "../common";
 import displayVNDCurrency from "../helpers/displayCurrency";
 import HorizontalCardProduct from "../components/HorizontalCardProduct";
 import CategoryWiseProductDisplay from "../components/CategoryWiseProductDisplay";
+import Context from "../context";
+import addToCart from "../helpers/addToCart";
 
 const ProductDetails = () => {
     const [data, setData] = useState({
@@ -21,7 +23,8 @@ const ProductDetails = () => {
     const productImageListLoading = new Array(4).fill(null)
     const [activeImage, setActiveImage] = useState("")
 
-
+    const {fetchUserAddToCart} = useContext(Context)
+    const navigate = useNavigate()
     console.log("product id", params)
     const fetchProductDetails = async () => {
         setLoading(true)
@@ -51,9 +54,20 @@ const ProductDetails = () => {
         setActiveImage(imageURL)
     }
 
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserAddToCart()
+    }
+
+    const handleBuyProduct = async (e, id) => {
+        await addToCart(e, id)
+        fetchUserAddToCart()
+        navigate("/cart")
+
+    }
 
     return (
-        <div className='container mx-auto p-4'>
+        <div className='pl-16 pr-16 mx-auto p-4'>
             <div className='min-h-[200px] flex flex-col lg:flex-row gap-4'>
                 {/*** Product Image ***/}
                 <div className='h-96 flex flex-col lg:flex-row-reverse gap-4'>
@@ -138,11 +152,13 @@ const ProductDetails = () => {
 
                             <div className='flex items-center gap-3 my-3'>
                                 <button
-                                    className='border-2 border-gray-400 rounded-md text-gray-500 px-3 py-1 bg-white min-w-[100px] font-medium h-12 hover:bg-gray-400 hover:text-white'>Mua
+                                    className='border-2 border-gray-400 rounded-md text-gray-500 px-3 py-1 bg-white min-w-[100px] font-medium h-12 hover:bg-gray-400 hover:text-white'
+                                    onClick={(e) => handleBuyProduct(e, data?._id)}>Mua
                                 </button>
                                 <button
-                                    className='border-2 border-gray-400 rounded-md px-3 py-1 text-white bg-gray-400 min-w-[100px] font-medium h-12 hover:bg-white hover:text-slate-500'>Thêm
-                                    vào giỏ hàng
+                                    className='border-2 border-gray-400 rounded-md px-3 py-1 text-white bg-gray-400 min-w-[100px] font-medium h-12 hover:bg-white hover:text-slate-500'
+                                    onClick={(e) => handleAddToCart(e, data?._id)}
+                                >Thêm vào giỏ hàng
                                 </button>
                             </div>
 

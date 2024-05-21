@@ -3,7 +3,7 @@ import Logo from "./Logo";
 import {IoSearch} from "react-icons/io5";
 import {FaRegUserCircle} from "react-icons/fa";
 import {PiShoppingCartSimpleBold} from "react-icons/pi";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import SummaryApi from "../common";
 import {toast} from 'react-toastify'
@@ -18,6 +18,9 @@ const Header = () => {
     const dispatch = useDispatch()
     const [menuDisplay, setMenuDisplay] = useState(false)
     const context = useContext(Context)
+    const navigate = useNavigate()
+    const searchInput = useLocation()
+    const [search, setSearch] = useState(searchInput?.search.split("=")[1])
 
     const handleLogout = async () => {
         const fetchData = await fetch(SummaryApi.logout_user.url, {
@@ -37,8 +40,19 @@ const Header = () => {
         }
     }
 
+    const handleSearch = (e) => {
+        const {value} = e.target
+        setSearch(value)
+        if (value) {
+            navigate(`/search?q=${value}`)
+        } else {
+            navigate("/search")
+        }
+    }
+
+
     return (
-        <header className='h-16 shadow-md bg-white'>
+        <header className='pl-16 pr-16 h-16 shadow-md bg-white'>
             <div className='h-full container mx-auto flex items-center justify-between px-4'>
                 <div className=''>
                     <Link to={"/"}>
@@ -47,7 +61,7 @@ const Header = () => {
                 </div>
                 <div
                     className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within: shadow pl-3'>
-                    <input type='text' placeholder='Tìm kiếm ' className='w-full outline-none'/>
+                    <input type='text' placeholder='Tìm kiếm ' className='w-full outline-none' onChange={handleSearch} value={search}/>
                     <div
                         className='text-lg min-w-[50px] h-8 bg-gray-400 flex items-center justify-center rounded-r-full text-white'>
                         <IoSearch/>
@@ -91,14 +105,14 @@ const Header = () => {
 
                     {
                         user?._id && (
-                            <div className='text-2xl relative'>
+                            <Link to={"/cart"} className='text-2xl relative'>
                                 <span> <PiShoppingCartSimpleBold/> </span>
 
                                 <div
                                     className='bg-red-400 text-white w-5 h-5 rounded-full p-1 flex items-center justify-center absolute -top-2 left-4'>
                                     <p className='text-sm'>{context?.cartProductCount}</p>
                                 </div>
-                            </div>
+                            </Link>
                         )
                     }
 

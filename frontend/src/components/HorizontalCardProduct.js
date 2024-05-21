@@ -8,10 +8,7 @@ import Context from "../context";
 const HorizontalCardProduct = ({category, heading}) => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    const loadingList = new Array(13).fill(null)
-
-    const [scroll, setScroll] = useState(0)
-    const scrollElement = useRef()
+    // const loadingList = new Array(13).fill(null)
 
     const {fetchUserAddToCart} = useContext(Context)
 
@@ -33,6 +30,9 @@ const HorizontalCardProduct = ({category, heading}) => {
         fetchData()
     }, []);
 
+    useEffect(() => {
+        console.log(data)
+    }, [data]);
 
     return (
         <div className='container mx-auto px-4 my-4'>
