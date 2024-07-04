@@ -8,10 +8,7 @@ import {MdDeleteForever} from "react-icons/md";
 import SummaryApi from "../common";
 import {toast} from "react-toastify";
 
-const UploadProduct = ({
-                           onClose,
-                           fetchData
-                       }) => {
+const UploadProduct = ({ onClose, fetchData }) => {
     const [data, setData] = useState({
         productName: "",
         brandName: "",

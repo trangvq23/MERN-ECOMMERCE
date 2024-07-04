@@ -171,7 +171,7 @@ const ProductDetails = () => {
 
             {
                 data.category && (
-                    <CategoryWiseProductDisplay category={data?.category} heading={"Product recommend"}/>
+                    <CategoryWiseProductDisplay category={data?.category} heading={"Category"}/>
                 )
             }
 

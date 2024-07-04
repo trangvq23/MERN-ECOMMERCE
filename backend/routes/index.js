@@ -40,7 +40,7 @@ router.post("/update-product", authToken, updateProductController)
 router.get("/get-category", getCategoryProduct)
 router.post("/category-product", getCategoryWiseProduct)
 router.post("/product-details", getProductDetails)
-router.get("search", searchProduct)
+router.get("/search", searchProduct)
 
 // add to cart
 router.post("/addtocart", authToken, addToCartController)
